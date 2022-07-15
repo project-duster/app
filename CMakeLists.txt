@@ -28,7 +28,7 @@ target_include_directories(
 
 target_compile_features(app_lib PUBLIC cxx_std_17)
 
-find_package(SDK REQUIRED)
+find_package(SDK CONFIG REQUIRED)
 find_package(SDL2 REQUIRED)
 find_package(fmt REQUIRED)
 
@@ -41,6 +41,7 @@ add_executable(app::exe ALIAS app_exe)
 
 set_target_properties(
     app_exe PROPERTIES
+    $<$<CONFIG:Debug>WIN32_EXECUTABLE FALSE>
     OUTPUT_NAME app
     EXPORT_NAME exe
 )
