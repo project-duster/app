@@ -26,12 +26,14 @@ target_include_directories(
     "$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/src>"
 )
 
-target_compile_features(app_lib PUBLIC cxx_std_17)
-
-find_package(SDK CONFIG REQUIRED)
+find_package(SDK REQUIRED)
 find_package(SDL2 REQUIRED)
-find_package(fmt REQUIRED)
+find_package(FMT REQUIRED)
+find_package(ENTT REQUIRED)
 
+message("SDK_DIR: ${SDK_DIR}")
+message("SDL2_DIR: ${SDL2_DIR}")
+message("FMT_DIR: ${FMT_DIR}")
 target_link_libraries(app_lib PUBLIC sdk::sdk)
 
 # ---- Declare executable ----
@@ -41,12 +43,9 @@ add_executable(app::exe ALIAS app_exe)
 
 set_target_properties(
     app_exe PROPERTIES
-    $<$<CONFIG:Debug>WIN32_EXECUTABLE FALSE>
     OUTPUT_NAME app
     EXPORT_NAME exe
 )
-
-target_compile_features(app_exe PRIVATE cxx_std_17)
 
 target_link_libraries(app_exe PRIVATE app_lib)
 

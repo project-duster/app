@@ -17,7 +17,7 @@
             "name": "clang-tidy",
             "hidden": true,
             "cacheVariables": {
-                "CMAKE_CXX_CLANG_TIDY": "clang-tidy;--header-filter=${sourceDir}/*"
+                "CMAKE_CXX_CLANG_TIDY": "clang-tidy;-p={$sourceDir}/build/dev/compile_commands.json"
             }
         },
         {
@@ -41,8 +41,11 @@
         },
         {
             "name": "dev-common",
+            "hidden": true,
+            "generator": "Ninja",
             "binaryDir": "${sourceDir}/build/dev",
             "inherits": [
+                "std",
                 "dev-mode",
                 "cppcheck",
                 "clang-tidy"
@@ -50,6 +53,13 @@
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug"
             }
+        },
+        {
+            "name": "dev-windows",
+            "hidden": true,
+            "inherits": [
+                "dev-common"
+            ]
         }
     ]
 }
