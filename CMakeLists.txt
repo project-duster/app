@@ -30,11 +30,12 @@ find_package(SDK REQUIRED)
 find_package(SDL2 REQUIRED)
 find_package(FMT REQUIRED)
 find_package(ENTT REQUIRED)
+find_package(TOMLPLUSPLUS REQUIRED)
 
-message("SDK_DIR: ${SDK_DIR}")
-message("SDL2_DIR: ${SDL2_DIR}")
-message("FMT_DIR: ${FMT_DIR}")
-target_link_libraries(app_lib PUBLIC sdk::sdk)
+# message("SDK_DIR: ${SDK_DIR}")
+# message("SDL2_DIR: ${SDL2_DIR}")
+# message("FMT_DIR: ${FMT_DIR}")
+target_link_libraries(app_lib PUBLIC sdk::sdk tomlplusplus::tomlplusplus)
 
 # ---- Declare executable ----
 
