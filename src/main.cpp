@@ -4,6 +4,7 @@
 #include <filesystem>
 #include <fmt/format.h>
 #include <fmt/std.h>
+#include <iostream>
 #include <sdk/sdk.hpp>
 #undef main
 
@@ -17,8 +18,12 @@ auto main() -> int {
     // Plugin loading from cwd
     for(const auto &e: std::filesystem::directory_iterator(".\\plugins")) {
         if(e.is_directory()) {
-            fmt::print("{}\n", e.path());
-            plugin_service.load_plugin((e.path() / std::filesystem::path{"librendererd.dll"}).string().c_str());
+            auto path          = e.path() / "manifest.toml";
+            auto mainfest_file = std::ifstream{path.string()};
+            if(auto manifest = sdk::read_manifest(mainfest_file)) {
+                auto dll_path = e.path() / fmt::format("lib{}d.dll", manifest->name);
+                plugin_service.load_plugin(dll_path.string().c_str());
+            }
         }
     }
 
